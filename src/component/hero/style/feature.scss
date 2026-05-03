@@ -1,0 +1,16 @@
+.feature-main{
+    // background-color: rgb(221, 229, 231);
+    color: black;
+    padding: 0px 8px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .feature-content{
+        width: 100%;
+        max-width: 1400px;
+        h1{
+            font-size: 32px;
+            padding: 64px 16px;
+        }
+    }
+}

@@ -1,0 +1,128 @@
+$text-main: #292929;
+$text-secondary: #757575;
+$accent: #1a8917; // Modern Green
+$bg-color: #ffffff00;
+$font-serif: 'Georgia', serif; // Best for long-form reading
+
+.blog-view-wrapper {
+  background-color: $bg-color;
+  min-height: 100vh;
+  padding: 0 20px;
+
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: $accent;
+    z-index: 1000;
+    transition: width 0.1s ease-out;
+  }
+
+  .blog-container {
+    max-width: 1400px; // Optimized for reading
+    margin: 0 auto;
+    padding: 80px 0;
+
+    .blog-header {
+      margin-bottom: 48px;
+
+      .blog-meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: $text-secondary;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+
+        .category { color: $accent; font-weight: 600; }
+      }
+
+      .blog-title {
+        font-size: 42px;
+        line-height: 1.2;
+        font-weight: 800;
+        color: $text-main;
+        margin-bottom: 24px;
+        letter-spacing: -0.5px;
+      }
+
+      .author-card {
+        margin-bottom: 32px;
+        .author-name { color: $text-secondary; font-size: 15px; }
+      }
+
+      .featured-image {
+        width: 100%;
+        border-radius: 8px;
+        margin-top: 20px;
+      }
+    }
+    .blog-layout{
+      display: flex;
+      gap: 16px;
+      .blog-sidebar{
+        width: 100%;
+        max-width: fit-content;
+      }
+    }
+
+    .blog-content-body {
+      font-family: $font-serif;
+      font-size: 20px;
+      line-height: 1.6;
+      color: #333;
+
+      p { margin-bottom: 28px; }
+
+      h1, h2, h3 {
+        font-family: 'Inter', sans-serif;
+        margin: 40px 0 16px 0;
+        color: $text-main;
+      }
+
+      h2 { font-size: 30px; }
+
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+        margin: 32px 0;
+      }
+
+      blockquote {
+        border-left: 4px solid $text-main;
+        padding-left: 20px;
+        font-style: italic;
+        margin: 30px 0;
+        color: $text-secondary;
+      }
+
+      // pre { // For code blocks
+      //   background: #f4f4f4;
+      //   padding: 16px;
+      //   overflow-x: auto;
+      //   border-radius: 5px;
+      //   font-size: 16px;
+      // }
+    }
+
+    .blog-footer {
+      margin-top: 60px;
+      color: $text-secondary;
+      text-align: center;
+      hr { border: 0; border-top: 1px solid #eee; margin-bottom: 30px; }
+    }
+  }
+}
+
+// Mobile Responsive
+@media (max-width: 768px) {
+  .blog-view-wrapper .blog-container {
+    padding: 40px 0;
+    .blog-header .blog-title { font-size: 32px; }
+    .blog-content-body { font-size: 18px; }
+  }
+}

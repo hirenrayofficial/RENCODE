@@ -1,0 +1,23 @@
+.hero-main {
+  width: 100%;
+  max-width: 1400px;
+  padding: 64px;
+  margin-bottom: 24px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  backdrop-filter: blur(50px);
+  .hero-content {
+    
+    .hero-intro {
+      width: 100%;
+      max-width: 575px;
+      h3 {
+        font-size: 24px;
+        line-height: normal;
+        text-align: center;
+      }
+    }
+  }
+}

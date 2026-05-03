@@ -1,0 +1,175 @@
+$text-main: #292929;
+$text-secondary: #757575;
+$accent: #1a8917;
+$bg-light: #f9f9f9;
+$border-color: #e0e0e0;
+
+.share-buttons {
+  margin: 48px 0;
+  padding: 28px;
+  background: $bg-light;
+  border-radius: 8px;
+  border-top: 2px solid $accent;
+
+  .share-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-main;
+    margin: 0 0 16px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      color: $accent;
+    }
+  }
+
+  .share-container {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: 6px;
+      border: 2px solid;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      color: $text-main;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      &.twitter {
+        border-color: #1da1f2;
+        color: #1da1f2;
+
+        &:hover {
+          background: #1da1f2;
+          color: white;
+        }
+      }
+
+      &.facebook {
+        border-color: #1877f2;
+        color: #1877f2;
+
+        &:hover {
+          background: #1877f2;
+          color: white;
+        }
+      }
+
+      &.linkedin {
+        border-color: #0077b5;
+        color: #0077b5;
+
+        &:hover {
+          background: #0077b5;
+          color: white;
+        }
+      }
+
+      &.copy-link {
+        border-color: $accent;
+        color: $accent;
+        position: relative;
+
+        &:hover:not(.copied) {
+          background: $accent;
+          color: white;
+        }
+
+        &.copied {
+          background: $accent;
+          color: white;
+          border-color: $accent;
+
+          .copy-alert {
+            animation: popIn 0.3s ease;
+          }
+        }
+
+        .copy-alert {
+          position: absolute;
+          top: -28px;
+          background: $accent;
+          color: white;
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 11px;
+          white-space: nowrap;
+          pointer-events: none;
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 4px solid $accent;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .share-buttons {
+    padding: 20px;
+    margin: 32px 0;
+
+    .share-container {
+      gap: 10px;
+
+      .share-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+
+        span {
+          display: none;
+        }
+
+        &:nth-child(n + 2) span {
+          display: none;
+        }
+      }
+    }
+  }
+}

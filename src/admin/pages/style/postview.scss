@@ -1,0 +1,112 @@
+.page-wrapper {
+  min-height: 100vh;
+  background-color: #f9f9f9;
+
+  .navbar {
+    padding: 1rem 2rem;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+      span {
+        color: #1a8917;
+      }
+    }
+  }
+
+  .post-list-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .blog-card {
+      display: flex;
+      flex-direction: row; // Default horizontal layout
+      gap: 20px;
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      text-decoration: none;
+      color: inherit;
+
+      .card-image {
+        img {
+          width: 200px;
+          height: 120px;
+          border-radius: 4px;
+          object-fit: cover;
+          display: block;
+        }
+      }
+
+      .card-details {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        align-items: center;
+
+        .text-content {
+          // This wrapper needs a defined width or flex-basis to know where to cut off
+          flex: 1;
+          // display: none;
+          width: 100%;
+          max-width: 300px; // Crucial for flexbox children to allow truncation
+
+          h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.2rem;
+
+            // --- TRUNCATION LOGIC ---
+            white-space: nowrap; // Keeps text on one line
+            overflow: hidden; // Hides the text that overflows the container
+            text-overflow: ellipsis; // Adds the "..."
+            display: block;
+          }
+
+          p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+          }
+        }
+      }
+
+      .edit-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid #e0e0e0;
+        transition: 0.3s;
+        cursor: pointer;
+        &:hover {
+          background: #1a8917;
+          color: white;
+          border-color: #1a8917;
+        }
+      }
+
+      // --- MOBILE RESPONSIVENESS ---
+      @media (max-width: 600px) {
+        flex-direction: column; // Stack image on top of text
+
+        .card-image img {
+          width: 100%; // Image takes full width on mobile
+          height: 180px;
+        }
+
+        .card-details {
+          flex-direction: row; // Keep text and edit button side-by-side
+          align-items: flex-start;
+        }
+      }
+    }
+  }
+}

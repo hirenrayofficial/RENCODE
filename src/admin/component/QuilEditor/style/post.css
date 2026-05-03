@@ -1,0 +1,155 @@
+:root {
+  --primary: #6366f1;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text-main: #1e293b;
+  --text-light: #64748b;
+  --border: #e2e8f0;
+}
+
+body {
+  background-color: var(--bg);
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  color: var(--text-main);
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Navbar */
+.navbar {
+  width: 100%;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.nav-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+.navbara {
+  width: 100%;
+
+  padding: 0.75rem 0;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+.nav-contenta {
+  max-width: fit-content;
+  height: 64px;
+  border-radius: 32px;
+  background: var(--primary);
+  border-bottom: 1px solid var(--border);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+.logo span {
+  color: var(--primary);
+}
+
+/* Buttons */
+.nav-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Editor Container */
+.editor-card {
+  width: 100%;
+  max-width: 1400px;
+  background: var(--card);
+  margin: 40px 20px;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.title-input {
+  width: 100%;
+  border: none;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  outline: none;
+  color: var(--text-main);
+}
+
+/* Modernizing Quill UI */
+.ql-toolbar.ql-snow {
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 8px 0 !important;
+  margin-bottom: 20px;
+}
+
+.ql-container.ql-snow {
+  border: none !important;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.ql-editor {
+  padding: 0 !important;
+  min-height: 400px;
+}
+
+/* Footer Info */
+.debug-footer {
+  margin-top: auto;
+  padding: 20px;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  display: flex;
+  gap: 20px;
+}
+
+.toggle-read {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
