@@ -2,56 +2,53 @@ import React from "react";
 import "./style/footer.scss";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <div className="footer-main">
-      <div className="footer-content">
-        <div className="content">
-          <div className="left">
-            <div className="brand">
-              <h2>Rencodes</h2>
-            </div>
-            <div className="details">
-              I create free learning resource for student,
-              developer,programer,engenier acces esayliy to read anything and
-              learn somthing new knowledge
-            </div>
+    <footer className="footer-main">
+      <div className="footer-container">
+        <div className="footer-grid">
+          {/* Brand Section */}
+          <div className="brand-section">
+            <h2 className="logo">Rencodes<span>.</span></h2>
+            <p className="description">
+              Empowering students and developers with high-quality, 
+              accessible learning resources. Read, code, and master 
+              new technologies every day.
+            </p>
           </div>
-          <div className="center-quick-links">
-            <div className="links-a">
-              <a href="/">Top</a>
+
+          {/* Links Sections */}
+          <nav className="footer-nav">
+            <div className="link-group">
+              <h4>Categories</h4>
+              <ul>
+                <li><a href="/web-dev">Web Development</a></li>
+                <li><a href="/ai-ml">AI & Machine Learning</a></li>
+                <li><a href="/app-dev">App Development</a></li>
+                <li><a href="/startup">Startups</a></li>
+              </ul>
             </div>
-            <div className="links-a">
-              <a href="/">Web Dev</a>
+
+            <div className="link-group">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="/about">About Me</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/privacy">Privacy Policy</a></li>
+                <li><a href="/terms">Terms of Service</a></li>
+              </ul>
             </div>
-            <div className="links-a">
-              <a href="/">AI Ml</a>
-            </div>
-            <div className="links-a">
-              <a href="/">App Dev</a>
-            </div>
-            <div className="links-a">
-              <a href="/">Startup</a>
-            </div>
-          </div>
-          <div className="right-quick-links">
-            <div className="links-a">
-              <a href="/">Top</a>
-            </div>
-            <div className="links-a">
-              <a href="/">Contact me</a>
-            </div>
-            <div className="links-a">
-              <a href="/">About me</a>
-            </div>
-            <div className="links-a">
-              <a href="/">Privecy policy</a>
-            </div>
+          </nav>
+        </div>
+
+        <div className="footer-bottom">
+          <p>© {currentYear} Rencodes. Made with ❤️ by <span>Hiren Ray</span></p>
+          <div className="social-placeholders">
+            {/* You can add Social Icons here later */}
           </div>
         </div>
       </div>
-      <div className="copyri">
-        <span>Made by Hiren Ray Copyright All right Reserve 2026</span>
-      </div>
-    </div>
+    </footer>
   );
 }

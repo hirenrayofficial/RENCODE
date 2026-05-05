@@ -1,22 +1,31 @@
 import React from 'react'
 import './style/emails.scss'
 
-export default function EmaiSupport() {
+export default function EmailSupport() {
   return (
-    <div className='email-main'>
-      <div className="email-content">
-        <div className="details">
-            <h3>Suscribe for New latest NewsLetters</h3>
+    <section className="email-newsletter">
+      <div className="bg-gradient-blur" aria-hidden="true" />
+      
+      <div className="content-wrapper">
+        <div className="text-section">
+          <h3>Stay in the loop</h3>
+          <p>Get the latest blog posts and industry insights delivered to your inbox.</p>
         </div>
-        <div className="from">
-            <div className="input">
-                <input type="text" placeholder='Enter Email Id' />
-            </div>
-            <div className="bt">
-                <button>Suscribe</button>
-            </div>
-        </div>
+
+        <form className="subscribe-form" onSubmit={(e) => e.preventDefault()}>
+          <div className="input-group">
+            <input 
+              type="email" 
+              placeholder="Enter your email address" 
+              required 
+            />
+            <button type="submit" className="submit-btn">
+              Subscribe
+            </button>
+          </div>
+          <span className="privacy-note">We care about your data. No spam, ever.</span>
+        </form>
       </div>
-    </div>
-  )
+    </section>
+  );
 }

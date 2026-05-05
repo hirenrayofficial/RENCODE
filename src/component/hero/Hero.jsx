@@ -1,52 +1,65 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style/hero.scss";
-import HoverAnimation from "./HoverAnimation";
+
+// Components
 import HeroMain from "./HeroMain";
 import BlogList from "./BlogList";
-import FeaturePost from "./FeaturePost";
 import Emailsupport from "./EmaiSupport";
-import { BlogListdata } from "../data/blogdata";
-import axios from "axios";
+
+// API
 import { getBlog } from "../api/ApiProvider";
+
 export default function Hero() {
-  const hasRun = useRef(false);
+  const [blogs, setBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const [dataa, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    if (hasRun.current) return;
-    hasRun.current = true;
+    let isMounted = true; // Prevents memory leaks
 
-    const fetchData = async () => {
+    const fetchBlogData = async () => {
       try {
+        setIsLoading(true);
         const result = await getBlog();
 
-        if (!result) {
-          console.error("Server error: No data received");
-          setLoading(true);
-          return;
+        if (isMounted) {
+          // Check if result and result.blogs exist
+          if (result?.blogs) {
+            setBlogs(result.blogs);
+          } else {
+            setBlogs([]);
+          }
         }
-        if (result.blogs[0]) {
-          setLoading(false);
-        } else {
-          setLoading(true);
-        }
-
-        setData(result.blogs);
       } catch (err) {
-        console.error("Fetch failed", err);
-        setLoading(true);
+        if (isMounted) {
+          console.error("Critical: API Fetch Failed", err);
+          setError("Failed to load content.");
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     };
 
-    fetchData();
+    fetchBlogData();
+
+    return () => {
+      isMounted = false; // Cleanup
+    };
   }, []);
+
   return (
     <div className="hero-container">
       <HeroMain />
-      <BlogList blogList={dataa} loading={loading} />
-      {/* <HoverAnimation blogList={dataa[0]} />
-      <FeaturePost blogList={dataa[0]} /> */}
+      
+      {/* Passing clean states to BlogList */}
+      <BlogList 
+        blogList={blogs} 
+        loading={isLoading} 
+        error={error} 
+      />
+
       <Emailsupport />
     </div>
   );

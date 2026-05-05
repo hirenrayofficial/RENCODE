@@ -19,17 +19,17 @@ export default function Header() {
             <h4>Rencode</h4>
           </div>
         </div>
-        <div className="center">
+        {/* <div className="center">
           <div className="link-a">
             <a href="/">Protfollio</a>
           </div>
           <div className="link-a">
             <a href="/">About Me</a>
           </div>
-        </div>
+        </div> */}
         <div className="right">
           <div className="avtar-menu" onClick={handelOpen}>
-            <span>H</span>
+            <span>R</span>
           </div>
         </div>
         {open && (
@@ -40,7 +40,7 @@ export default function Header() {
                   <button>Sign In</button>
                 </div>
                 <div className="bt-b">
-                  <button>Sign In</button>
+                  <button>LogIn</button>
                 </div>
               </div>
               <div className="bottom">

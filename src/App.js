@@ -28,19 +28,19 @@ const router = createBrowserRouter([
       { path: "blog/:slug", element: <BlogView /> },
     ],
   },
-  {
-    path: "/admin",
-    element: (
-      <ProtectedAdmin>
-        <AdminLay />
-      </ProtectedAdmin>
-    ),
-    children: [
-      { index: true, element: <Published /> },
-      { path: "post", element: <PostView /> },
-      {path: "post/edit/:slug", element: <Editblog />},
-    ],
-  },
+  // {
+  //   path: "/admin",
+  //   element: (
+  //     <ProtectedAdmin>
+  //       <AdminLay />
+  //     </ProtectedAdmin>
+  //   ),
+  //   children: [
+  //     { index: true, element: <Published /> },
+  //     { path: "post", element: <PostView /> },
+  //     {path: "post/edit/:slug", element: <Editblog />},
+  //   ],
+  // },
 ]);
 
 export default function App() {

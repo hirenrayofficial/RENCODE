@@ -1,67 +1,109 @@
 .footer-main {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  background-color: #ffffff;
+  border-top: 1px solid #eaeaea;
+  padding-top: 80px;
+  color: #1a1a1a;
 
-  .footer-content {
-    width: 100%;
-    max-width: 1400px;
-    padding: 32px 0px;
-    border-top: solid 1px;
-    .content {
-      display: flex;
-      justify-content: space-between;
-      .left {
-        max-width: 450px;
-        h2 {
-          font-size: 32px;
-        }
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+    gap: 40px;
+    padding-bottom: 60px;
+
+    .brand-section {
+      .logo {
+        font-size: 28px;
+        font-weight: 800;
+        margin-bottom: 16px;
+        letter-spacing: -1px;
+        
         span {
-          color: gray;
+          color: #abe947; // Using your signature green
+        }
+      }
+
+      .description {
+        color: #666;
+        line-height: 1.6;
+        font-size: 15px;
+        max-width: 360px;
+      }
+    }
+
+    .footer-nav {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+
+      .link-group {
+        h4 {
+          font-size: 14px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          margin-bottom: 20px;
+          color: #999;
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+
+          li {
+            margin-bottom: 12px;
+
+            a {
+              text-decoration: none;
+              color: #444;
+              font-size: 15px;
+              transition: color 0.2s ease;
+
+              &:hover {
+                color: #abe947;
+              }
+            }
+          }
         }
       }
     }
   }
-  .copyri {
-    background-color: rgb(247, 247, 247);
-    color: black;
-    width: 100%;
+
+  .footer-bottom {
+    border-top: 1px solid #f0f0f0;
+    padding: 30px 0;
     display: flex;
-    justify-content: center;
-    padding: 12px 0px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #888;
+
+    span {
+      font-weight: 600;
+      color: #1a1a1a;
+    }
   }
 }
-@media screen and (max-width: 800px) {
+
+// Responsive Design
+@media screen and (max-width: 850px) {
   .footer-main {
-    .footer-content {
-      width: 100%;
-      max-width: 1400px;
-      padding: 32px 8px;
-      border-top: solid 1px;
-      .content {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        .left {
-          max-width: 450px;
-          h2 {
-            font-size: 32px;
-          }
-          span {
-            color: gray;
-          }
-        }
-      }
+    padding-top: 60px;
+
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 50px;
     }
-    .copyri {
-      background-color: rgb(247, 247, 247);
-      color: black;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      padding: 12px 0px;
+
+    .footer-bottom {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
     }
   }
 }

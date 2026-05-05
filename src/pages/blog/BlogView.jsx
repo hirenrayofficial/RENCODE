@@ -8,6 +8,7 @@ import ShareButtons from "./components/ShareButtons";
 import RelatedPosts from "./components/RelatedPosts";
 import CodeBlock from "./components/CodeBlock";
 import "./blogview.scss";
+import BlogSkeleton from "./BlogSkeleton";
 
 export default function BlogView() {
   const { slug } = useParams();
@@ -57,44 +58,73 @@ export default function BlogView() {
 
     return content.map((item, index) => {
       try {
-        // Check if any operation is a code block
-        const hasCodeBlock = item.ops?.some(
-          (op) => op.attributes?.["code-block"] || op.attributes?.code
-        );
+        const elements = [];
+        let currentLines = []; // Holds objects representing each line
 
-        if (hasCodeBlock) {
-          // Extract code content and language
-          let codeContent = "";
-          let language = "javascript";
-
-          item.ops?.forEach((op) => {
-            if (op.insert && typeof op.insert === "string") {
-              codeContent += op.insert;
-            }
-            // Extract language if specified
-            if (op.attributes?.["code-block"]) {
-              language = op.attributes["code-block"] || "javascript";
-            }
-          });
-
-          return (
-            <CodeBlock
-              key={index}
-              code={codeContent.trim()}
-              language={language}
-            />
-          );
+        // --- STEP 1: Split ops into logical lines ---
+        let tempLineOps = [];
+        item.ops.forEach((op) => {
+          tempLineOps.push(op);
+          // If this op contains a newline, it's the end of a line
+          if (typeof op.insert === "string" && op.insert.includes("\n")) {
+            const isCode = !!op.attributes?.["code-block"];
+            currentLines.push({ ops: tempLineOps, isCode });
+            tempLineOps = [];
+          }
+        });
+        // Catch any remaining ops that didn't end in a newline
+        if (tempLineOps.length > 0) {
+          currentLines.push({ ops: tempLineOps, isCode: false });
         }
 
-        // For non-code content, convert to HTML
-        const converter = new QuillDeltaToHtmlConverter(item.ops, {});
-        const htmlContent = converter.convert();
+        // --- STEP 2: Group consecutive lines of the same type ---
+        let i = 0;
+        while (i < currentLines.length) {
+          let groupIsCode = currentLines[i].isCode;
+          let groupOps = [...currentLines[i].ops];
+          let j = i + 1;
+
+          // Keep adding lines to this group if they are the same type (Code vs Text)
+          while (
+            j < currentLines.length &&
+            currentLines[j].isCode === groupIsCode
+          ) {
+            groupOps = [...groupOps, ...currentLines[j].ops];
+            j++;
+          }
+
+          // --- STEP 3: Render the group ---
+          if (groupIsCode) {
+            // Extract plain text from all ops in this code group
+            const fullCode = groupOps
+              .map((op) => (typeof op.insert === "string" ? op.insert : ""))
+              .join("");
+
+            elements.push(
+              <CodeBlock
+                key={`code-group-${index}-${i}`}
+                code={fullCode.trim()} // trim removes extra leading/trailing newlines
+                language="javascript"
+              />,
+            );
+          } else {
+            // Render as normal HTML text
+            const converter = new QuillDeltaToHtmlConverter(groupOps, {});
+            elements.push(
+              <div
+                key={`text-group-${index}-${i}`}
+                dangerouslySetInnerHTML={{ __html: converter.convert() }}
+              />,
+            );
+          }
+
+          i = j; // Move to the next group
+        }
 
         return (
-          <div
-            key={index}
-            dangerouslySetInnerHTML={{ __html: htmlContent }}
-          />
+          <div key={index} className="blog-content-row">
+            {elements}
+          </div>
         );
       } catch (error) {
         console.error("Error rendering content:", error);
@@ -119,7 +149,7 @@ export default function BlogView() {
 
     updateMeta(
       "description",
-      blogInfo?.blog_description?.substring(0, 160) || "Read this article"
+      blogInfo?.blog_description?.substring(0, 160) || "Read this article",
     );
     updateMeta("keywords", blogInfo?.category || "blog post");
 
@@ -137,7 +167,7 @@ export default function BlogView() {
     updateOgMeta("og:title", blogInfo?.blog_name || "Blog Article");
     updateOgMeta(
       "og:description",
-      blogInfo?.blog_description?.substring(0, 160) || "Read this article"
+      blogInfo?.blog_description?.substring(0, 160) || "Read this article",
     );
     updateOgMeta("og:image", blogInfo?.featured_image || "");
     updateOgMeta("og:url", window.location.href);
@@ -194,29 +224,20 @@ export default function BlogView() {
   }
 
   if (!blogData) {
-    return (
-      <div className="blog-view-wrapper">
-        <div className="loading-container">
-          <div className="skeleton-header"></div>
-          <div className="skeleton-content"></div>
-          <div className="skeleton-content"></div>
-        </div>
-      </div>
-    );
+    return <BlogSkeleton />;
   }
 
   const content = blogData?.blog_content || [];
   const readTime = estimateReadTime(content);
-  
+
   // Demo author data for testing
   const demoAuthor = {
-    name: "John Developer",
-    avatar: "https://via.placeholder.com/80?text=JD",
+    name: "Hiren Ray",
+    avatar: "https://avatars.githubusercontent.com/u/166147435?v=4",
     bio: "Full-stack developer and tech writer. Passionate about building amazing web experiences.",
-    email: "john@example.com",
-    website: "https://example.com",
-    github: "johndeveloper",
-    twitter: "johndeveloper"
+    email: "contact@hirenray.rest",
+    website: "https://iam.hirenray.rest",
+    github: "https://github.com/hirenrayofficial",
   };
 
   const author = blogData?.blog_author || demoAuthor;
@@ -264,10 +285,7 @@ export default function BlogView() {
           {/* Main Content */}
           <main className="blog-main">
             {/* Blog Content */}
-            <section
-              ref={contentRef}
-              className="blog-content-body"
-            >
+            <section ref={contentRef} className="blog-content-body">
               {renderBlogContent(content)}
             </section>
 
@@ -275,25 +293,27 @@ export default function BlogView() {
             {author && <AuthorComponent author={author} />}
 
             {/* Share Buttons */}
-            <ShareButtons 
-              title={blogData?.blog_name} 
+            <ShareButtons
+              title={blogData?.blog_name}
               url={window.location.href}
             />
 
             {/* Blog Footer */}
             <footer className="blog-footer">
               <hr />
-              <p>Thanks for reading! Feel free to share this article with others.</p>
+              <p>
+                Thanks for reading! Feel free to share this article with others.
+              </p>
             </footer>
           </main>
         </div>
 
         {/* Related Posts */}
-        <RelatedPosts
+        {/* <RelatedPosts
           category={blogData?.category}
           currentBlogId={blogData?._id}
           limit={3}
-        />
+        /> */}
       </article>
     </div>
   );
