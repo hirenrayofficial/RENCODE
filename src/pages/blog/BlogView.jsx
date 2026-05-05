@@ -5,7 +5,7 @@ import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import AuthorComponent from "./components/Author";
 import TableOfContents from "./components/TableOfContents";
 import ShareButtons from "./components/ShareButtons";
-import RelatedPosts from "./components/RelatedPosts";
+// import RelatedPosts from "./components/RelatedPosts";
 import CodeBlock from "./components/CodeBlock";
 import "./blogview.scss";
 import BlogSkeleton from "./BlogSkeleton";

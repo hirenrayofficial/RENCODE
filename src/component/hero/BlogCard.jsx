@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./style/list-card.scss";
 import { Heart, MessageCircle, SignalHigh } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { DateTime } from "luxon";
 import { FiShare2 } from "react-icons/fi";
 import ShareMenu from "./ShareMenu";
