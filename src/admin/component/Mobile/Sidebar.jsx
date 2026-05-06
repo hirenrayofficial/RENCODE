@@ -1,27 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import {
-  LayoutDashboard,
-  ArrowLeftRight,
-  BarChart3,
-  ChevronUp,
-  ShieldCheck,
-  Eye,
-  Check,
-  Moon,
-  Sun,
-  Globe,
-  IdCard,
-} from "lucide-react";
+import { LayoutDashboard, ArrowLeftRight } from "lucide-react";
 import "./side.scss";
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-//   const {isAdmin, toggleRole } = useAuth();
+  //   const {isAdmin, toggleRole } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-//   const { isDark, toggleTheme } = useTheme();
+  //   const { isDark, toggleTheme } = useTheme();
   const [isMobileOpen, setIsMobileOpen] = useState(false); // Mobile sidebar toggle
 
   // Close dropdown when clicking outside

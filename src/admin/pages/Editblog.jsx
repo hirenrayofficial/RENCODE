@@ -5,14 +5,14 @@ import Quill from "quill";
 import "../component/QuilEditor/style/post.css";
 import { getBlogBySlug, updateBlog } from "../api/adminApi";
 
-const Delta = Quill.import("delta");
+// const Delta = Quill.import("delta");
 
 const Editblog = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const [range, setRange] = useState();
-  const [lastChange, setLastChange] = useState();
-  const [readOnly, setReadOnly] = useState(false);
+  // const [range, setRange] = useState();
+  // const [lastChange, setLastChange] = useState();
+  // const [readOnly, setReadOnly] = useState(false);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [author, setAuthor] = useState("");

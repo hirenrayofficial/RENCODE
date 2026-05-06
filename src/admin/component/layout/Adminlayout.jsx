@@ -1,7 +1,7 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+// import { Outlet } from "react-router-dom";
 
-import Sidebar from "../Mobile/Sidebar";
+// import Sidebar from "../Mobile/Sidebar";
 
 export default function Adminlayout() {
   return (

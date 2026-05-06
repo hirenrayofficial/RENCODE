@@ -12,7 +12,7 @@ import BlogSkeleton from "./BlogSkeleton";
 
 export default function BlogView() {
   const { slug } = useParams();
-  const location = useLocation();
+  // const location = useLocation();
   const [blogData, setBlogData] = useState(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [error, setError] = useState(null);
@@ -41,16 +41,16 @@ export default function BlogView() {
   };
 
   // Utility to escape HTML
-  const escapeHtml = (text) => {
-    const map = {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;",
-    };
-    return text.replace(/[&<>"']/g, (m) => map[m]);
-  };
+  // const escapeHtml = (text) => {
+  //   const map = {
+  //     "&": "&amp;",
+  //     "<": "&lt;",
+  //     ">": "&gt;",
+  //     '"': "&quot;",
+  //     "'": "&#039;",
+  //   };
+  //   return text.replace(/[&<>"']/g, (m) => map[m]);
+  // };
 
   // Render blog content with CodeBlock components for code
   const renderBlogContent = (content) => {

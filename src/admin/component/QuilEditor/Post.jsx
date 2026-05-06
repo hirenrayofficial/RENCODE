@@ -9,13 +9,13 @@ import { getBlog, saveBlog } from "../../api/adminApi";
 const Delta = Quill.import("delta");
 
 const Post = () => {
-  const [range, setRange] = useState();
-  const [lastChange, setLastChange] = useState();
+  // const [range, setRange] = useState();
+  // const [lastChange, setLastChange] = useState();
   const [readOnly, setReadOnly] = useState(false);
   const [title, setTitle] = useState("");
   const [cetagorey, setCategory] = useState("");
   const [author, setAuthor] = useState("");
-  const [slug, setSlug] = useState("");
+  // const [slug, setSlug] = useState("");
   const quillRef = useRef();
 
   const slugify = (title) => {

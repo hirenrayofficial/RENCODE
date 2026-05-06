@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import "./style/postview.scss";
 import { deleteBlog, getBlog } from "../api/adminApi";
 import { BiEdit } from "react-icons/bi";
-import { FaDeleteLeft } from "react-icons/fa6";
-import { Delete, DeleteIcon } from "lucide-react";
+// import { FaDeleteLeft } from "react-icons/fa6";
+import {  DeleteIcon } from "lucide-react";
 import { DateTime } from "luxon";
 
 export default function PostView() {
@@ -65,7 +65,7 @@ export default function PostView() {
                   <BiEdit size={18} />
                 </a>
                 <a
-                  // href={`/admin/post/edit/${item?.blog_slug}`}
+                  href={`/admin/post/edit/${item?.blog_slug}`}
                   className="edit-button"
                   onClick={(e)=>handelDelete(item?._id)}
                 >
