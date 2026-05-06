@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./component/layout/Layout";
 import "@fontsource/audiowide";
@@ -10,7 +10,7 @@ import "@fontsource-variable/orbitron";
 // import Preload from "./component/animation/Preload";
 import Hero from "./component/hero/Hero";
 import BlogView from "./pages/blog/BlogView";
-import Adminlayout from "./admin/component/layout/Adminlayout";
+// import Adminlayout from "./admin/component/layout/Adminlayout";
 // import Published from "./admin/pages/Published";
 // import ProtectedAdmin from "./protectedRoute/ProtectedAdmin";
 // import PostView from "./admin/pages/PostView";

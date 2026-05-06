@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getBlog } from "../../component/api/ApiProvider";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import AuthorComponent from "./components/Author";
