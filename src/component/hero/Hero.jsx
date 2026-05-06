@@ -53,7 +53,7 @@ export default function Hero() {
     <div className="hero-container">
       <HeroMain />
       
-      {/* Passing clean states to BlogList */}
+
       <BlogList 
         blogList={blogs} 
         loading={isLoading} 

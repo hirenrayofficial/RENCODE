@@ -5,7 +5,7 @@ $main_bg: rgb(0, 255, 115);
   align-items: center;
   width: 100%;
   // height: 100%;
-  padding: 0px 0px 0px 0px;
+  padding: 0px 16px;
 
   position: fixed;
   top: 0;
@@ -44,6 +44,7 @@ $main_bg: rgb(0, 255, 115);
     }
     .right {
       margin: 0;
+      padding-right: 42px;
       .avtar-menu {
         padding: 8px 12px;
         border-radius: 50%;
@@ -64,7 +65,7 @@ $main_bg: rgb(0, 255, 115);
       max-width: fit-content;
       position: absolute;
       top: 100%;
-      right: 5%;
+      right: 10%;
       .top {
         display: flex;
         gap: 8px;

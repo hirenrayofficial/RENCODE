@@ -2,15 +2,15 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 12px;
+  padding: 0 0px;
 
   .list-content {
     width: 100%;
     display: flex;
     flex-direction: row;
-    // justify-content: center;
-    align-items: center;
-    gap: 16px;
+    justify-content: center; 
+    align-items: stretch;
+    gap: 24px;
     flex-wrap: wrap;
 
     //skeleton //
@@ -18,6 +18,11 @@
 
     .skeleton-card {
       pointer-events: none;
+      flex: 1 1 300px; // Adjusted for better wrapping
+      max-width: 400px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
 
       // The Shimmer Effect
       .skeleton-img,
@@ -94,8 +99,9 @@
     }
 
     .blog-card {
-      width: 100%;
-      max-width: 400px;
+      flex: 1 1 300px; 
+      max-width: 400px; 
+      min-width: 280px; // Prevents cards from getting too thin
       background: #ffffff;
       border-radius: 16px;
       overflow: hidden;
@@ -104,6 +110,7 @@
       display: flex;
       flex-direction: column;
       position: relative;
+
 
       &:hover {
         transform: translateY(-8px);
@@ -317,6 +324,3 @@
     }
   }
 }
-
-
-

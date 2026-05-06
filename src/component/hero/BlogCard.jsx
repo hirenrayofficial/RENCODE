@@ -82,7 +82,7 @@ export default function BlogCard({ blogList, loading }) {
 
                       <h3 className="title">{item?.blog_name}</h3>
                       <p className="description">
-                        {item?.blog_desciption?.slice(0, 85)}...
+                        {item?.blog_desciption?.slice(0, 85) || "No description available"}...
                       </p>
                     </div>
                   </a>
