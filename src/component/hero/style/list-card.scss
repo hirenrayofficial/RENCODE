@@ -7,9 +7,10 @@
   .list-content {
     width: 100%;
     display: flex;
-    align-items: stretch;
-    gap: 16px;
+    flex-direction: row;
     justify-content: center;
+    align-items: center;
+    gap: 16px;
     flex-wrap: wrap;
 
     //skeleton //
@@ -317,136 +318,5 @@
   }
 }
 
-/* Responsive Breakpoints */
 
-/* Extra Small Devices (Mobile: 320px - 480px) */
-@media (max-width: 480px) {
-  .list-main {
-    padding: 0 8px;
 
-    .list-content {
-      gap: 12px;
-
-      .main-card-content {
-        max-width: 100%;
-        margin-bottom: 32px;
-
-        a {
-          padding: 10px;
-
-          h3 {
-            font-size: 14px;
-            -webkit-line-clamp: 2;
-          }
-
-          .right {
-            font-size: 11px;
-
-            span {
-              font-size: 11px;
-            }
-          }
-        }
-
-        .card-img img {
-          height: 150px;
-        }
-
-        .card-feature {
-          gap: 12px;
-          padding: 6px 10px;
-
-          .like,
-          .comment,
-          .impretion {
-            font-size: 11px;
-
-            span {
-              font-size: 11px;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-/* Small Devices (Tablet: 481px - 768px) */
-@media (min-width: 481px) and (max-width: 768px) {
-  .list-main {
-    padding: 0 10px;
-
-    .list-content {
-      gap: 14px;
-
-      .main-card-content {
-        max-width: calc(50% - 7px);
-        margin-bottom: 40px;
-
-        a {
-          padding: 11px;
-
-          h3 {
-            font-size: 15px;
-          }
-        }
-
-        .card-img img {
-          height: 170px;
-        }
-
-        .card-feature {
-          gap: 14px;
-          padding: 7px 11px;
-        }
-      }
-    }
-  }
-}
-
-/* Medium Devices (Desktop: 769px - 1024px) */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .list-main {
-    .list-content {
-      .main-card-content {
-        max-width: calc(50% - 8px);
-        margin-bottom: 48px;
-
-        a {
-          padding: 12px;
-
-          h3 {
-            font-size: 16px;
-          }
-        }
-
-        .card-img img {
-          height: 190px;
-        }
-      }
-    }
-  }
-}
-
-/* Large Devices (Desktop: 1025px and above) */
-@media (min-width: 1025px) {
-  .list-main {
-    .list-content {
-      .main-card-content {
-        margin-bottom: 48px;
-
-        a {
-          padding: 12px;
-
-          h3 {
-            font-size: 16px;
-          }
-        }
-
-        .card-img img {
-          height: 200px;
-        }
-      }
-    }
-  }
-}
