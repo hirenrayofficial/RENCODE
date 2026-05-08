@@ -6,9 +6,7 @@ import Footer from "./Footer";
 export default function Layout() {
   return (
     <div>
-      <title>
-        RayUi || Tamplete A
-      </title>
+
       <header>
         <Header/>
       </header>

@@ -16,7 +16,8 @@ export default function Header() {
       <div className="header-content">
         <div className="left">
           <div className="brand">
-            <h4>Rencode</h4>
+            {/* <h4>Rencode</h4> */}
+            <img src="/logo.png" style={{width: "120px"}} alt="" />
           </div>
         </div>
         {/* <div className="center">
