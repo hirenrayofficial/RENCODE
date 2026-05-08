@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="footer-grid">
           {/* Brand Section */}
           <div className="brand-section">
-            <h2 className="logo">Rencodes<span>.</span></h2>
+            <img src="/logo.png" style={{width: "120px"}} alt="" />
             <p className="description">
               Empowering students and developers with high-quality, 
               accessible learning resources. Read, code, and master 
@@ -43,7 +43,7 @@ export default function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <p>© {currentYear} Rencodes. Made with ❤️ by <span>Hiren Ray</span></p>
+          <p>© {currentYear} RoadToCode. Made with ❤️ by <span><a style={{textDecoration: "none", color: "green"}} href="iam.hirenray.rest">Hiren Ray</a></span></p>
           <div className="social-placeholders">
             {/* You can add Social Icons here later */}
           </div>
