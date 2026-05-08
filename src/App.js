@@ -10,14 +10,14 @@ import "@fontsource-variable/orbitron";
 // import Preload from "./component/animation/Preload";
 import Hero from "./component/hero/Hero";
 import BlogView from "./pages/blog/BlogView";
-// import Adminlayout from "./admin/component/layout/Adminlayout";
-// import Published from "./admin/pages/Published";
-// import ProtectedAdmin from "./protectedRoute/ProtectedAdmin";
-// import PostView from "./admin/pages/PostView";
-// import Editblog from "./admin/pages/Editblog";
+import Adminlayout from "./admin/component/layout/Adminlayout";
+import Published from "./admin/pages/Published";
+import ProtectedAdmin from "./protectedRoute/ProtectedAdmin";
+import PostView from "./admin/pages/PostView";
+import Editblog from "./admin/pages/Editblog";
 
 const HomeLayout = () => <Layout />;
-// const AdminLay = () => <Adminlayout />;
+const AdminLay = () => <Adminlayout />;
 
 const router = createBrowserRouter([
   {
@@ -28,19 +28,19 @@ const router = createBrowserRouter([
       { path: "blog/:slug", element: <BlogView /> },
     ],
   },
-  // {
-  //   path: "/admin",
-  //   element: (
-  //     <ProtectedAdmin>
-  //       <AdminLay />
-  //     </ProtectedAdmin>
-  //   ),
-  //   children: [
-  //     { index: true, element: <Published /> },
-  //     { path: "post", element: <PostView /> },
-  //     {path: "post/edit/:slug", element: <Editblog />},
-  //   ],
-  // },
+  {
+    path: "/admin",
+    element: (
+      <ProtectedAdmin>
+        <AdminLay />
+      </ProtectedAdmin>
+    ),
+    children: [
+      { index: true, element: <Published /> },
+      { path: "post", element: <PostView /> },
+      {path: "post/edit/:slug", element: <Editblog />},
+    ],
+  },
 ]);
 
 export default function App() {
