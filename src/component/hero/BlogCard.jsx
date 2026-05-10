@@ -66,7 +66,7 @@ export default function BlogCard({ blogList, loading }) {
                         loading="lazy"
                       />
                       <div className="image-overlay">
-                        <span className="category-badge">Article</span>
+                        <span className="category-badge">{item?.blog_type} Article</span>
                       </div>
                     </div>
 
@@ -76,7 +76,7 @@ export default function BlogCard({ blogList, loading }) {
                           {date.toFormat("dd LLL yyyy")}
                         </span>
                         <span className="author">
-                          by {item?.blog_aurthor || "Hiren"}
+                          by {item?.blog_author || "Hiren"}
                         </span>
                       </div>
 
