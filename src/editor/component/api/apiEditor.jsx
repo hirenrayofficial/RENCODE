@@ -22,5 +22,5 @@ export const saveBlog = async (storedata) => {
 };
 export const logOut = async () => {
   const removels = localStorage.clear()
-  return
+  return removels
 };

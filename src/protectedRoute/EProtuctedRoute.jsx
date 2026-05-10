@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { checkEditor } from "../editor/component/api/apiEditor";
 // import jwt from 'jsonwebtoken'
@@ -19,8 +19,8 @@ export default  function EProtuctedRoute({ children }) {
                 return window.location.replace("/login")
             }
         }
-        // checkUser()
-    })
+        checkUser()
+    }, [])
 
     return children;
 }
