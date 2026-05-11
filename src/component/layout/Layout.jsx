@@ -8,9 +8,6 @@ export default function Layout() {
   return (
     <div>
        <Toaster position='top-center' richColors/>
-      <title>
-        RayUi || Tamplete A
-      </title>
       <header>
         <Header/>
       </header>
