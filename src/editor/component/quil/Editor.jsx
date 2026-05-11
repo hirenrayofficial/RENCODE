@@ -8,6 +8,9 @@ const Editor = forwardRef(
     const onTextChangeRef = useRef(onTextChange);
     const onSelectionChangeRef = useRef(onSelectionChange);
 
+    // 1. Track initialization to prevent re-setting content on every render
+    const isInitializedRef = useRef(false);
+
     useLayoutEffect(() => {
       onTextChangeRef.current = onTextChange;
       onSelectionChangeRef.current = onSelectionChange;
@@ -38,15 +41,17 @@ const Editor = forwardRef(
 
       ref.current = quill;
 
-      if (defaultValue) {
+      // 2. Only set content if we haven't initialized yet
+      if (defaultValue && !isInitializedRef.current) {
         quill.setContents(defaultValue);
+        isInitializedRef.current = true;
       }
 
-      quill.on("text-change", (...args) => {
+      quill.on(Quill.events.TEXT_CHANGE, (...args) => {
         onTextChangeRef.current?.(...args);
       });
 
-      quill.on("selection-change", (...args) => {
+      quill.on(Quill.events.SELECTION_CHANGE, (...args) => {
         onSelectionChangeRef.current?.(...args);
       });
 
@@ -54,7 +59,8 @@ const Editor = forwardRef(
         ref.current = null;
         container.innerHTML = "";
       };
-    }, [ref]); // Removed defaultValue from deps to prevent re-renders
+      // 3. Now it's safe to include in the dependency array
+    }, [ref, defaultValue]);
 
     return <div className="modern-editor-container" ref={containerRef}></div>;
   },
