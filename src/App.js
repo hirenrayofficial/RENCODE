@@ -10,6 +10,11 @@ import "@fontsource-variable/orbitron";
 // import Preload from "./component/animation/Preload";
 import Hero from "./component/hero/Hero";
 import BlogView from "./pages/blog/BlogView";
+import EditorLayout from "./component/layout/editorLayout/EditorLayout";
+import Editordashboard from "./editor/Editordashboard";
+import Login from "./pages/authenTication/Login";
+import EProtuctedRoute from "./protectedRoute/EProtuctedRoute";
+import Post from "./editor/pages/Post";
 // import Adminlayout from "./admin/component/layout/Adminlayout";
 // import Published from "./admin/pages/Published";
 // import ProtectedAdmin from "./protectedRoute/ProtectedAdmin";
@@ -17,6 +22,7 @@ import BlogView from "./pages/blog/BlogView";
 // import Editblog from "./admin/pages/Editblog";
 
 const HomeLayout = () => <Layout />;
+const Editor = () => <EditorLayout />;
 // const AdminLay = () => <Adminlayout />;
 
 const router = createBrowserRouter([
@@ -26,6 +32,26 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Hero /> },
       { path: "blog/:slug", element: <BlogView /> },
+      { path: "login", element: <Login /> },
+    ],
+  },
+  {
+    path: "/editor",
+    element: (
+      <EProtuctedRoute>
+        {" "}
+        <Editor />
+      </EProtuctedRoute>
+    ),
+    children: [
+      {
+        index: '/',
+        element: <Editordashboard />,
+      },
+      {
+        path: "post",
+        element: <Post />,
+      },
     ],
   },
   // {

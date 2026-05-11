@@ -1,0 +1,129 @@
+:root {
+  --primary: #6366f1;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text-main: #1e293b;
+  --text-light: #64748b;
+  --border: #e2e8f0;
+  --header-height: 180px; /* Reference for spacing */
+}
+
+body {
+  /* background-color: var(--bg); */
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page-wrapper {
+  min-height: 120vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Editor Container */
+.editor-card {
+  width: 90%;
+  max-width: 1000px; /* Standard writing width is better for readability */
+  background: var(--card);
+  margin-top: 80px;
+  padding: 0px; /* Give the text room to breathe */
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+/* Header Section (Not Fixed) 
+   Fixed positioning on a title usually causes overlap issues. 
+   Sticky or standard flow is safer for writing apps. */
+.title-input {
+  width: 100%;
+  border: none;
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 24px;
+  outline: none;
+  color: var(--text-main);
+  background: transparent;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.387);
+  /* border-top: 1px; */
+}
+.cetagorey-input {
+  width: 100%;
+  border: none;
+  font-size: 1rem;
+  font-weight: 800;
+  margin-bottom: 24px;
+  outline: none;
+  color: var(--text-main);
+  background: transparent;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.387);
+}
+.sv-bt {
+  width: 100%;
+  border: none;
+  font-size: 1rem;
+  font-weight: 800;
+  /* margin-bottom: 54px; */
+  height: 40px;
+  color: black;
+  background: #bbfdcd;
+  cursor: pointer;
+  &:hover{
+     background: #09c75c;
+  }
+}
+
+.title-input::placeholder {
+  color: #cbd5e1;
+}
+
+/* Modernizing Quill UI */
+.ql-toolbar.ql-snow {
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  position: sticky; /* Keeps it at the top of the screen when scrolling */
+  top: 0;
+  z-index: 100;
+  background: var(--card);
+  padding: 0px 0 !important;
+}
+
+.ql-container.ql-snow {
+  border: none !important;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--text-main);
+}
+
+.ql-editor {
+  padding: 0px 0 !important;
+  min-height: 500px;
+}
+
+/* Footer Info */
+.debug-footer {
+  margin-top: 40px;
+  padding: 0px;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.toggle-read {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.toggle-read:hover {
+  color: var(--primary);
+}

@@ -13,3 +13,15 @@ export const getBlog = async (slug) => {
 
   // console.log(res.data.getallblog)
 };
+export const loginApi = async (email, pass) => {
+  console.log(email,pass)
+  if ((!email, !pass)) {
+    return;
+  }
+  
+  const res = await axios.post(`${api}/user/login`, {
+    email,
+    pass,
+  });
+  return res;
+};
