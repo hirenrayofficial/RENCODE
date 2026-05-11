@@ -20,7 +20,7 @@ export default  function EProtuctedRoute({ children }) {
             }
         }
         checkUser()
-    }, [])
+    }, [token,id])
 
     return children;
 }
