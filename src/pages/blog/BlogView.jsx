@@ -230,17 +230,8 @@ export default function BlogView() {
   const content = blogData?.blog_content || [];
   const readTime = estimateReadTime(content);
 
-  // Demo author data for testing
-  const demoAuthor = {
-    name: "Hiren Ray",
-    avatar: "https://avatars.githubusercontent.com/u/166147435?v=4",
-    bio: "Full-stack developer and tech writer. Passionate about building amazing web experiences.",
-    email: "contact@hirenray.rest",
-    website: "https://iam.hirenray.rest",
-    github: "https://github.com/hirenrayofficial",
-  };
 
-  const author = blogData?.blog_author || demoAuthor;
+  const author = blogData?.blog_author;
 
   return (
     <div className="blog-view-wrapper">
