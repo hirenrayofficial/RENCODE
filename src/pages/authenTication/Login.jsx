@@ -5,8 +5,10 @@ import { toast } from "sonner";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const handelSubmit = async () => {
+    setIsLoggedIn(false); // Disable the button immediately to prevent multiple clicks
     // 1. Basic validation
     if (!email || !pass) {
       return toast.error("Please fill in all fields");
@@ -17,11 +19,12 @@ export default function Login() {
 
       // 2. Handle Success
       if (res.status === 200 && res.data.token) {
+        setIsLoggedIn(true); // Re-enable the button on success
         toast.success("Login Successful");
 
         // Store user info (Avoid storing sensitive tokens in localStorage if possible)
         const userData = {
-          id:res.data.id,
+          id: res.data.id,
           name: res.data.name,
           role: res.data.role,
         };
@@ -32,7 +35,9 @@ export default function Login() {
         // If you must use localStorage:
         localStorage.setItem("auth-token", res.data.token);
 
-        return window.location.replace(`/editor?token=${res.data.token}&id=${res.data.id}`);
+        return window.location.replace(
+          `/editor?token=${res.data.token}&id=${res.data.id}`,
+        );
       }
 
       // 3. Handle specific known errors (401 Unauthorized, etc.)
@@ -77,7 +82,16 @@ export default function Login() {
           </div>
 
           <div className="submit-b">
-            <button onClick={(e) => handelSubmit()}>Next</button>
+            <button
+              onClick={(e) => handelSubmit()}
+              disabled={!isLoggedIn} // Button is disabled if NOT logged in
+              style={{
+                opacity: isLoggedIn ? 1 : 0.5,
+                cursor: isLoggedIn ? "pointer" : "not-allowed",
+              }}
+            >
+              Next
+            </button>
           </div>
         </div>
       </div>

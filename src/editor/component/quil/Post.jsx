@@ -3,6 +3,7 @@ import Editor from "./Editor";
 
 import "./style/post.css";
 import { saveBlog } from "../api/apiEditor";
+import { toast } from "sonner";
 
 const Post = () => {
   const [setRange] = useState();
@@ -11,6 +12,8 @@ const Post = () => {
   const [title, setTitle] = useState("");
   const [cetagorey, setCategory] = useState("");
   const getNmae = JSON.parse(localStorage.getItem("edit-u-nm"));
+
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   // const [slug, setSlug] = useState("");
   const quillRef = useRef();
@@ -26,6 +29,12 @@ const Post = () => {
   };
 
   const handlePublish = async () => {
+    // 1. Validate data before starting (optional but recommended)
+    if (!title || !cetagorey) {
+      return toast.error("Please fill in all fields");
+    }
+
+    setIsLoggedIn(false); // Disable button
     const content = quillRef.current?.getContents();
 
     const storedata = {
@@ -36,13 +45,20 @@ const Post = () => {
       blog_type: cetagorey,
       id: getNmae?.id,
     };
-    alert(JSON.stringify(storedata));
-    const savedApi = await saveBlog(storedata);
-    if (savedApi) {
-      alert("Done");
-    } else {
-      console.log("connection error");
-    }
+
+    // 2. Use toast.promise to handle the loading state automatically
+    toast.promise(saveBlog(storedata), {
+      loading: "Publishing your blog...",
+      success: (data) => {
+        setIsLoggedIn(true); // Re-enable button
+        return "Blog published successfully!";
+      },
+      error: (err) => {
+        setIsLoggedIn(true); // Re-enable button so they can try again
+        console.error("Connection error:", err);
+        return "Failed to publish. Please check your connection.";
+      },
+    });
   };
 
   return (
@@ -76,7 +92,15 @@ const Post = () => {
           onSelectionChange={setRange}
           onTextChange={setLastChange}
         />
-        <button className="sv-bt" onClick={handlePublish}>
+        <button
+          className="sv-bt"
+          onClick={handlePublish}
+          disabled={!isLoggedIn} // Button is disabled if NOT logged in
+          style={{
+            opacity: isLoggedIn ? 1 : 0.5,
+            cursor: isLoggedIn ? "pointer" : "not-allowed",
+          }}
+        >
           Save Now
         </button>
       </main>
