@@ -37,10 +37,6 @@ $main_bg: rgb(0, 255, 115);
       display: flex;
       gap: 8px;
       align-items: center;
-      a {
-        text-decoration: none;
-        color: black;
-      }
     }
     .right {
       margin: 0;
@@ -62,8 +58,8 @@ $main_bg: rgb(0, 255, 115);
         cursor: pointer;
         display: flex;
         align-items: center;
-                  border: 0.8px solid rgba(0, 0, 0, 0);
-        &:hover{
+        border: 0.8px solid rgba(0, 0, 0, 0);
+        &:hover {
           transition: 0.2s ease;
           border: 0.8px solid rgb(210, 17, 17);
         }
@@ -148,6 +144,14 @@ $main_bg: rgb(0, 255, 115);
           background: rgb(244, 102, 102);
         }
       }
+    }
+  }
+}
+@media screen and (max-width: 700px) {
+  .header-container {
+    .center {
+      display: hidden;
+      font-size: 0px;
     }
   }
 }

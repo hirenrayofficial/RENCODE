@@ -26,6 +26,7 @@ export default function Eheader() {
       return window.location.replace("/");
     }
   };
+  const lsdtails = JSON.parse(localStorage.getItem("edit-u-nm"))
   return (
     <div className="header-container">
       <div className="absulute-bg"></div>
@@ -35,17 +36,12 @@ export default function Eheader() {
             <h4>EditorDashboard</h4>
           </div>
         </div>
-        {/* <div className="center">
-          <div className="link-a">
-            <a href="/">Protfollio</a>
-          </div>
-          <div className="link-a">
-            <a href="/">About Me</a>
-          </div>
-        </div> */}
+        <div className="center">
+          Welcome'Back {lsdtails?.name}
+        </div>
         <div className="right">
           <div className="avtar-menu" >
-            <span>R</span>
+            <span>{(lsdtails?.name).slice(0,1)}</span>
           </div>
           <div className="log-menu" onClick={handelOpen}>
             <LogOutIcon size={10}/>

@@ -10,7 +10,7 @@ const Post = () => {
   const [readOnly] = useState(false);
   const [title, setTitle] = useState("");
   const [cetagorey, setCategory] = useState("");
-  const getNmae = localStorage.getItem("edit-u-nm");
+  const getNmae = JSON.parse( localStorage.getItem("edit-u-nm"));
 
   // const [slug, setSlug] = useState("");
   const quillRef = useRef();
@@ -29,7 +29,7 @@ const Post = () => {
     const content = quillRef.current?.getContents();
 
     const storedata = {
-      blog_author: getNmae.name,
+      blog_author: getNmae?.name,
       blog_name: title,
       blog_slug: slugify(title),
       blog_content: content,
