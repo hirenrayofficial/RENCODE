@@ -10,6 +10,10 @@ export default function Header() {
       setOpen(false);
     }
   };
+
+  const handelLogin = ()=>{
+    window.location.replace("/login")
+  }
   return (
     <div className="header-container">
       <div className="absulute-bg"></div>
@@ -41,7 +45,7 @@ export default function Header() {
                   <button>Sign In</button>
                 </div>
                 <div className="bt-b">
-                  <button>LogIn</button>
+                  <button onClick={(e)=>handelLogin()}>LogIn</button>
                 </div>
               </div>
               <div className="bottom">
