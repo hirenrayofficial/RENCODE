@@ -2,14 +2,9 @@ import axios from "axios";
 const api = process.env.REACT_APP_BACK_URL;
 
 export const checkEditor = async (token, id) => {
-  const res = await axios.post(
-    api + "/edit/check",
-    {
-      token,
-      id,
-    },
-    { withCredentials: true },
-  );
+  const res = await axios.get(api + "/edit/check?id=" + id, {
+    headers: { "Content-Type": "application/json" },
+  });
   return res;
 };
 export const saveBlog = async (storedata) => {
@@ -21,6 +16,11 @@ export const saveBlog = async (storedata) => {
   return apiCall;
 };
 export const logOut = async () => {
-  const removels = localStorage.clear()
-  return removels
+  const removels = localStorage.clear();
+  return removels;
+};
+
+export const getuserByBlog = async (id) => {
+  const callApi = await axios.get(api + "/edit/blog/get?id=" + id);
+  return callApi;
 };

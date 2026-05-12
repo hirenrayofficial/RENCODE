@@ -21,9 +21,11 @@ export default function Login() {
 
         // Store user info (Avoid storing sensitive tokens in localStorage if possible)
         const userData = {
+          id:res.data.id,
           name: res.data.name,
-          role: res.data.role || "admin",
+          role: res.data.role,
         };
+
         localStorage.setItem("edit-u-nm", JSON.stringify(userData));
 
         // SECURE PRACTICE: Set token in a way that doesn't leak in the URL

@@ -1,58 +1,77 @@
-import React from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-
-// Mock data for demonstration
-const MOCK_BLOGS = [
-  {
-    id: 1,
-    title: "The Future of Swift",
-    excerpt: "Exploring iOS 26 design patterns...",
-    isAdminOnly: false,
-  },
-  {
-    id: 2,
-    title: "System Kernel Logs",
-    excerpt: "Sensitive architectural data.",
-    isAdminOnly: true,
-  },
-  {
-    id: 3,
-    title: "Neural Engine 5",
-    excerpt: "How the new chips handle AI locally.",
-    isAdminOnly: false,
-  },
-  {
-    id: 4,
-    title: "Admin: User Bans",
-    excerpt: "Manage flagged accounts here.",
-    isAdminOnly: true,
-  },
-];
+import { getuserByBlog } from "../component/api/apiEditor";
 
 export default function Post() {
-  // In a real app, this would come from an Auth Context or API
   const { isAdmin } = useAuth();
-  const editorBlog = MOCK_BLOGS;
-  const adminBlog = ()=>{ return  MOCK_BLOGS.filter((blog) => !blog.isAdminOnly)}
+  const [blogdata, setBlogdata] = useState([]);
 
-  // Filter logic: If admin, show all. If not, filter out isAdminOnly posts.
-  const displayedBlogs = isAdmin ? editorBlog : adminBlog;
+  // 1. Memoize the fetch function to satisfy useEffect dependencies
+  const fetchBlogs = useCallback(async () => {
+    try {
+      // Get ID inside the callback or from state to ensure it's fresh
+      const lsdetails = JSON.parse(localStorage.getItem("edit-u-nm"));
+      const id = lsdetails?.id;
 
+      if (!id) return;
+
+      // Both admin and editor logic likely need to await the API call
+      const res = await getuserByBlog(id);
+
+      if (res?.data?.blog) {
+        setBlogdata(res.data.blog);
+      }
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+    }
+  }, []); // Add [isAdmin] here if the API logic changes based on role
+
+  const hasrun = useRef(false)
+  // 2. The useEffect now has a stable reference to fetchBlogs
+  useEffect(() => {
+    if(hasrun.current) return
+    hasrun.current = true
+    fetchBlogs();
+  }, [fetchBlogs]);
   return (
     <div style={styles.container}>
       <header style={styles.header}>
-        <h1 style={styles.title}>Your Post</h1>
+        <h1 style={styles.title}>Your Posts</h1>
       </header>
 
       <div style={styles.grid}>
-        {displayedBlogs.map((blog) => (
-          <div key={blog.id} style={styles.card}>
+        {blogdata?.map((blog, index) => (
+          <div
+            key={index}
+            style={styles.card}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-5px)";
+              e.currentTarget.style.boxShadow = "0 15px 40px rgba(0,0,0,0.08)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.04)";
+            }}
+          >
             <span style={styles.category}>
               {blog.isAdminOnly ? "Internal" : "Public"}
             </span>
-            <h2 style={styles.cardTitle}>{blog.title}</h2>
-            <p style={styles.excerpt}>{blog.excerpt}</p>
-            <div style={styles.blurButton}>Read More</div>
+
+            <h2 style={styles.cardTitle}>{blog.blog_name}</h2>
+            <p style={styles.excerpt}>By {blog.blog_author}</p>
+
+            <div style={styles.statusText}>
+              <span style={styles.statusDot(blog.is_aproved)} />
+              <span style={{ color: blog.is_aproved ? "#34C759" : "#FF3B30" }}>
+                {blog.is_aproved ? "Approved" : "Pending Review"}
+              </span>
+            </div>
+
+            {isAdmin ? (
+              <div style={styles.bluraButton}>Admin Approved</div>
+            ) : (
+              <div style={styles.blurButton}>Read More</div>
+            )}
           </div>
         ))}
       </div>
@@ -63,89 +82,111 @@ export default function Post() {
 // iOS 26 Aesthetic Styles
 const styles = {
   container: {
-    padding: "40px 0px",
-    // backgroundColor: '#F2F2F7', // Classic iOS Light Gray
+    // padding: "40px 20px",
+    marginTop: "80px",
     minHeight: "100vh",
     fontFamily:
-      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     width: "100%",
     maxWidth: "1300px",
-    // display: "flex",
-    margin: "auto",
+    margin: "0 auto",
+    // backgroundColor: "#f9f9fb", // Subtle background to make cards pop
   },
   header: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: "30px",
+    marginBottom: "40px",
+    borderBottom: "1px solid #eee",
+    paddingBottom: "20px",
   },
   title: {
-    fontSize: "34px",
+    fontSize: "36px",
     fontWeight: "800",
-    letterSpacing: "-0.5px",
-    color: "#000",
-  },
-  toggleAdmin: {
-    padding: "8px 16px",
-    borderRadius: "20px",
-    border: "none",
-    backgroundColor: "#E9E9EB",
-    fontWeight: "600",
-    cursor: "pointer",
-  },
-  toggleAdminActive: {
-    padding: "8px 16px",
-    borderRadius: "20px",
-    border: "none",
-    backgroundColor: "#007AFF",
-    color: "#FFF",
-    fontWeight: "600",
-    cursor: "pointer",
+    letterSpacing: "-1px",
+    color: "#1d1d1f",
+    margin: 0,
   },
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-    gap: "20px",
+    gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+    gap: "24px",
   },
   card: {
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
-    backdropFilter: "blur(20px)",
-    WebkitBackdropFilter: "blur(20px)",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    backdropFilter: "blur(12px)",
+    WebkitBackdropFilter: "blur(12px)",
     borderRadius: "24px",
-    padding: "24px",
-    boxShadow: "0 8px 32px rgba(0,0,0,0.05)",
-    border: "1px solid rgba(255,255,255,0.3)",
+    padding: "28px",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.04)",
+    border: "1px solid rgba(255,255,255,0.6)",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease",
+    cursor: "default",
   },
   category: {
-    fontSize: "12px",
-    fontWeight: "700",
+    fontSize: "11px",
+    fontWeight: "800",
     textTransform: "uppercase",
-    color: "#8E8E93",
-    marginBottom: "8px",
-    display: "block",
+    letterSpacing: "0.5px",
+    color: "#007AFF", // iOS Blue
+    marginBottom: "12px",
+    padding: "4px 10px",
+    backgroundColor: "rgba(0, 122, 255, 0.1)",
+    borderRadius: "8px",
+    alignSelf: "flex-start",
   },
   cardTitle: {
-    fontSize: "20px",
+    fontSize: "22px",
     fontWeight: "700",
-    margin: "0 0 10px 0",
-    color: "#1C1C1E",
+    margin: "0 0 8px 0",
+    color: "#1c1c1e",
+    lineHeight: "1.2",
   },
   excerpt: {
     fontSize: "15px",
-    color: "#3A3A3C",
-    lineHeight: "1.4",
-    marginBottom: "20px",
+    color: "#636366",
+    lineHeight: "1.5",
+    marginBottom: "16px",
+    fontWeight: "500",
   },
+  statusText: {
+    fontSize: "13px",
+    fontWeight: "600",
+    marginBottom: "24px",
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
+  },
+  statusDot: (approved) => ({
+    width: "8px",
+    height: "8px",
+    borderRadius: "50%",
+    backgroundColor: approved ? "#34C759" : "#FF3B30",
+    display: "inline-block",
+  }),
   blurButton: {
-    backgroundColor: "#000",
+    backgroundColor: "#1c1c1e",
     color: "#FFF",
     textAlign: "center",
-    padding: "12px",
-    borderRadius: "14px",
+    padding: "14px",
+    borderRadius: "16px",
     fontWeight: "600",
-    fontSize: "14px",
+    fontSize: "15px",
+    cursor: "pointer",
+    transition: "background-color 0.2s",
+    marginTop: "auto", // Pushes button to bottom
+  },
+  bluraButton: {
+    backgroundColor: "#34C759", // Apple Green
+    color: "#FFF",
+    textAlign: "center",
+    padding: "14px",
+    borderRadius: "16px",
+    fontWeight: "600",
+    fontSize: "15px",
+    cursor: "pointer",
+    marginTop: "auto",
   },
 };

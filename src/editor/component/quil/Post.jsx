@@ -10,7 +10,7 @@ const Post = () => {
   const [readOnly] = useState(false);
   const [title, setTitle] = useState("");
   const [cetagorey, setCategory] = useState("");
-  const getNmae = JSON.parse( localStorage.getItem("edit-u-nm"));
+  const getNmae = JSON.parse(localStorage.getItem("edit-u-nm"));
 
   // const [slug, setSlug] = useState("");
   const quillRef = useRef();
@@ -34,6 +34,7 @@ const Post = () => {
       blog_slug: slugify(title),
       blog_content: content,
       blog_type: cetagorey,
+      id: getNmae?.id,
     };
     alert(JSON.stringify(storedata));
     const savedApi = await saveBlog(storedata);
