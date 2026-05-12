@@ -30,7 +30,7 @@ export default function Login() {
         // If you must use localStorage:
         localStorage.setItem("auth-token", res.data.token);
 
-        return window.location.replace("/editor");
+        return window.location.replace(`/editor?token=${res.data.token}&id=${res.data.id}`);
       }
 
       // 3. Handle specific known errors (401 Unauthorized, etc.)

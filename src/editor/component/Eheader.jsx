@@ -44,7 +44,7 @@ export default function Eheader() {
           </div>
         </div> */}
         <div className="right">
-          <div className="avtar-menu" onClick={handelOpen}>
+          <div className="avtar-menu" >
             <span>R</span>
           </div>
           <div className="log-menu" onClick={handelOpen}>
