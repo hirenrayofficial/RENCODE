@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams, Navigate } from "react-router-dom";
 import { checkEditor } from "../editor/component/api/apiEditor";
+import { toast } from "sonner";
 
 export default function EProtuctedRoute({ children }) {
     const [searchParams] = useSearchParams();
@@ -40,11 +41,7 @@ export default function EProtuctedRoute({ children }) {
 
     // 1. Show nothing (or a spinner) while checking authorization
     if (loading) {
-        return (
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
-                <p>Verifying Access...</p>
-            </div>
-        );
+        return toast.success("verify success")
     }
 
     // 2. If check failed, redirect to login

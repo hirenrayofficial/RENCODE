@@ -1,10 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { getuserByBlog } from "../component/api/apiEditor";
+import { aprovedBlog, deleteBlog, getuserByBlog } from "../component/api/apiEditor";
+import { toast } from "sonner";
+import { Trash } from "lucide-react";
 
 export default function Post() {
   const { isAdmin } = useAuth();
   const [blogdata, setBlogdata] = useState([]);
+  const lsdetails = JSON.parse(localStorage.getItem("edit-u-nm"));
+  const id = lsdetails.id;
 
   // 1. Memoize the fetch function to satisfy useEffect dependencies
   const fetchBlogs = useCallback(async () => {
@@ -26,13 +30,37 @@ export default function Post() {
     }
   }, []); // Add [isAdmin] here if the API logic changes based on role
 
-  const hasrun = useRef(false)
+  const hasrun = useRef(false);
   // 2. The useEffect now has a stable reference to fetchBlogs
   useEffect(() => {
-    if(hasrun.current) return
-    hasrun.current = true
+    if (hasrun.current) return;
+    hasrun.current = true;
     fetchBlogs();
   }, [fetchBlogs]);
+
+  const handelApproved = async (blogid) => {
+    toast.promise(aprovedBlog(id, blogid), {
+      loading: "Under Proccess",
+      success: (data) => {
+        return "aproved Success";
+      },
+      error: (err) => {
+        return "Unsucces to aproved";
+      },
+    });
+  };
+  const handelDelete = async (blogid) => {
+    toast.promise(deleteBlog(id, blogid), {
+      loading: "Under Proccess",
+      success: (data) => {
+        return "Delete Success";
+      },
+      error: (err) => {
+        return "Unsucces to Delete";
+      },
+    });
+  };
+
   return (
     <div style={styles.container}>
       <header style={styles.header}>
@@ -68,7 +96,20 @@ export default function Post() {
             </div>
 
             {isAdmin ? (
-              <div style={styles.bluraButton}>Admin Approved</div>
+              <div style={{ display: "flex", gap: "4px" }}>
+                <div
+                  style={styles.bluraButton}
+                  onClick={(e) => handelApproved(blog._id)}
+                >
+                  Admin Approved
+                </div>
+                <div
+                  style={styles.bluraButton}
+                  onClick={(e) => handelDelete(blog._id)}
+                >
+                  <Trash size={16} />
+                </div>
+              </div>
             ) : (
               <div style={styles.blurButton}>Read More</div>
             )}
@@ -82,14 +123,13 @@ export default function Post() {
 // iOS 26 Aesthetic Styles
 const styles = {
   container: {
-    // padding: "40px 20px",
-    marginTop: "80px",
     minHeight: "100vh",
     fontFamily:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     width: "100%",
     maxWidth: "1300px",
-    margin: "0 auto",
+    margin: "0 auto ",
+    marginTop: "80px",
     // backgroundColor: "#f9f9fb", // Subtle background to make cards pop
   },
   header: {

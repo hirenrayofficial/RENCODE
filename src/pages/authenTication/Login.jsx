@@ -14,54 +14,40 @@ export default function Login() {
       return toast.error("Please fill in all fields");
     }
 
-    try {
-      const res = await loginApi(email, pass);
+    toast.promise(loginApi(email, pass), {
+      loading: "Fetch Your Login Details..",
+      success: (data) => {
+        "Login Success";
+        setIsLoggedIn(true);
+        if (data.status === 200 && data.data.token) {
+          const userData = {
+            id: data.data.id,
+            name: data.data.name,
+            role: data.data.role,
+          };
 
-      // 2. Handle Success
-      if (res.status === 200 && res.data.token) {
-        setIsLoggedIn(true); // Re-enable the button on success
-        toast.success("Login Successful");
+          localStorage.setItem("edit-u-nm", JSON.stringify(userData));
 
-        // Store user info (Avoid storing sensitive tokens in localStorage if possible)
-        const userData = {
-          id: res.data.id,
-          name: res.data.name,
-          role: res.data.role,
-        };
+          // SECURE PRACTICE: Set token in a way that doesn't leak in the URL
+          // If you must use localStorage:
+          localStorage.setItem("auth-token", data.data.token);
 
-        localStorage.setItem("edit-u-nm", JSON.stringify(userData));
+          return window.location.replace(
+            `/editor?token=${data.data.token}&id=${data.data.id}`,
+          );
+        }
+        if (data.status === 401) {
+          return toast.error("Invalid email or password");
+        }
 
-        // SECURE PRACTICE: Set token in a way that doesn't leak in the URL
-        // If you must use localStorage:
-        localStorage.setItem("auth-token", res.data.token);
-
-        return window.location.replace(
-          `/editor?token=${res.data.token}&id=${res.data.id}`,
-        );
-      }
-
-      // 3. Handle specific known errors (401 Unauthorized, etc.)
-      if (res.status === 401) {
-        return toast.error("Invalid email or password");
-      }
-
-      // 4. Fallback for other status codes
-      throw new Error("Unexpected response status");
-    } catch (error) {
-      // 5. Generic error handling for the user
-      console.error("Login attempt failed"); // Log a generic message, not the full error
-
-      if (error.response) {
-        // The server responded with a status code outside the 2xx range
-        toast.error("Authentication failed. Please try again.");
-      } else if (error.request) {
-        // The request was made but no response was received
-        toast.error("Network error. Please check your connection.");
-      } else {
-        // Something happened in setting up the request
-        toast.error("An unexpected error occurred.");
-      }
-    }
+        return;
+      },
+      error: (err) => {
+        setIsLoggedIn(true); // Re-enable button so they can try again
+        console.error("Connection error:", err);
+        return `Failed to Login. Please check your connection.`;
+      },
+    });
   };
   return (
     <div className="login-container">

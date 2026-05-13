@@ -24,3 +24,12 @@ export const getuserByBlog = async (id) => {
   const callApi = await axios.get(api + "/edit/blog/get?id=" + id);
   return callApi;
 };
+
+export const aprovedBlog = async (id,blogid)=>{
+  const res = await axios.post(api + "/edit/blog/approved?id="+id+"&blogID="+blogid)
+  return res
+}
+export const deleteBlog = async (id,blogid)=>{
+  const res = await axios.post(api + "/edit/blog/delete?id="+id+"&blogID="+blogid)
+  return res
+}
