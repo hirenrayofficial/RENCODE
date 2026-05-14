@@ -2,53 +2,64 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchParams, Navigate } from "react-router-dom";
 import { checkEditor } from "../editor/component/api/apiEditor";
 import { toast } from "sonner";
+import "./loading.scss"; // Import your styles here
 
 export default function EProtuctedRoute({ children }) {
-    const [searchParams] = useSearchParams();
-    const token = searchParams.get("token");
-    const id = searchParams.get("id");
-    
-    const hasRun = useRef(false);
-    const [loading, setLoading] = useState(true);
-    const [access, setAccess] = useState(false);
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  const id = searchParams.get("id");
 
-    useEffect(() => {
-        // Prevent double execution in Strict Mode
-        if (hasRun.current) return;
-        hasRun.current = true;
+  const hasRun = useRef(false);
+  const [loading, setLoading] = useState(true);
+  const [access, setAccess] = useState(false);
 
-        const verifyUser = async () => {
-            try {
-                if (!token || !id) {
-                    setAccess(false);
-                } else {
-                    const res = await checkEditor(token, id);
-                    if (res.status === 200) {
-                        setAccess(true);
-                    } else {
-                        setAccess(false);
-                    }
-                }
-            } catch (error) {
-                setAccess(false);
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    if (hasRun.current) return;
+    hasRun.current = true;
 
-        verifyUser();
-    }, [token, id]);
+    const verifyUserWithDelay = async () => {
+      const delay = new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // 1. Show nothing (or a spinner) while checking authorization
-    if (loading) {
-        return toast.success("verify success")
-    }
+      try {
+        if (!token || !id) throw new Error("Missing credentials");
 
-    // 2. If check failed, redirect to login
-    if (!access) {
-        return <Navigate to="/login" replace />;
-    }
+        // Runs both tasks simultaneously; completes in 2s minimum
+        const [res] = await Promise.all([checkEditor(token, id), delay]);
 
-    // 3. Only if access is true, render the protected children
-    return children;
+        if (res.status === 200) {
+          setAccess(true);
+          return res;
+        } else {
+          throw new Error("Unauthorized");
+        }
+      } catch (error) {
+        setAccess(false);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    toast.promise(verifyUserWithDelay(), {
+      loading: "Verifying your workspace...",
+      success: "Identity confirmed.",
+      error: "Redirecting to login...",
+    });
+  }, [token, id]);
+
+  // Loading state with the new SCSS classes
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+        <p className="loading-text">Preparing your editor...</p>
+      </div>
+    );
+  }
+
+  if (!access) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
 }

@@ -9,6 +9,7 @@ import ShareButtons from "./components/ShareButtons";
 import CodeBlock from "./components/CodeBlock";
 import "./blogview.scss";
 import BlogSkeleton from "./BlogSkeleton";
+import { BiArrowBack } from "react-icons/bi";
 
 export default function BlogView() {
   const { slug } = useParams();
@@ -181,9 +182,9 @@ export default function BlogView() {
       try {
         setError(null);
         const res = await getBlog(slug);
-        console.log("Blog API Response:", res); // Debug log
+        // console.log("Blog API Response:", res); // Debug log
         if (res && res.getSlug) {
-          console.log("Blog Data:", res.getSlug); // Debug log
+          // console.log("Blog Data:", res.getSlug); // Debug log
           setBlogData(res.getSlug);
           setPageMeta(res.getSlug);
         } else {
@@ -211,12 +212,12 @@ export default function BlogView() {
 
   if (error) {
     return (
-      <div className="blog-view-wrapper">
-        <div className="error-container">
+      <div className="blog-view-wrapper" >
+        <div className="blog-container" style={{display: 'flex',justifyContent: "center",alignItems: "center",flexDirection: 'column'}}>
           <h2>Oops! Something went wrong</h2>
           <p>{error}</p>
-          <a href="/blog" className="back-link">
-            ← Back to Blog
+          <a href="/" className="back-link" style={{background: "#449713",color: "white", padding: "10px",borderRadius: "10px",display: "flex",gap: "8px",textDecoration: "none",alignItems: "center"}}>
+            <BiArrowBack/> Back to Blog
           </a>
         </div>
       </div>

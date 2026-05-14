@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { aprovedBlog, deleteBlog, getuserByBlog } from "../component/api/apiEditor";
+import {
+  aprovedBlog,
+  deleteBlog,
+  getuserByBlog,
+} from "../component/api/apiEditor";
 import { toast } from "sonner";
 import { Trash } from "lucide-react";
 
@@ -24,6 +28,7 @@ export default function Post() {
 
       if (res?.data?.blog) {
         setBlogdata(res.data.blog);
+
       }
     } catch (error) {
       console.error("Error fetching blogs:", error);
@@ -35,17 +40,41 @@ export default function Post() {
   useEffect(() => {
     if (hasrun.current) return;
     hasrun.current = true;
-    fetchBlogs();
+    toast.promise(fetchBlogs(),{
+      loading: "load content",
+      success: (data)=>{
+        return "load succes"
+      },
+      error: (err)=>{
+        return "data not loading"
+      }
+    });
   }, [fetchBlogs]);
 
-  const handelApproved = async (blogid) => {
-    toast.promise(aprovedBlog(id, blogid), {
+  const handelApproved = async ({ blogid, type }) => {
+    toast.promise(aprovedBlog(id, blogid, type), {
       loading: "Under Proccess",
       success: (data) => {
         return "aproved Success";
       },
       error: (err) => {
         return "Unsucces to aproved";
+      },
+    });
+  };
+  const handelConfrom = (blogid) => {
+    toast("Can you conform to delete blog", {
+      action: {
+        label: "Ok",
+        onClick: () => {
+          handelDelete(blogid);
+        },
+      },
+      cancel: {
+        label: "cancel",
+        onClick: () => {
+          return;
+        },
       },
     });
   };
@@ -68,7 +97,7 @@ export default function Post() {
       </header>
 
       <div style={styles.grid}>
-        {blogdata?.map((blog, index) => (
+        { blogdata?.map((blog, index) => (
           <div
             key={index}
             style={styles.card}
@@ -82,7 +111,7 @@ export default function Post() {
             }}
           >
             <span style={styles.category}>
-              {blog.isAdminOnly ? "Internal" : "Public"}
+              {blog.is_aproved ? "Public" : "Private"}
             </span>
 
             <h2 style={styles.cardTitle}>{blog.blog_name}</h2>
@@ -97,15 +126,22 @@ export default function Post() {
 
             {isAdmin ? (
               <div style={{ display: "flex", gap: "4px" }}>
-                <div
-                  style={styles.bluraButton}
-                  onClick={(e) => handelApproved(blog._id)}
+                <button
+                  style={
+                    blog.is_aproved ? styles.blurButtonr : styles.bluraButton
+                  }
+                  onClick={(e) =>
+                    handelApproved({
+                      blogid: blog._id,
+                      type: blog.is_aproved === true ? "public" : "unpublic",
+                    })
+                  }
                 >
-                  Admin Approved
-                </div>
+                  {blog.is_aproved === true ? "Unapproved" : "Approved"}
+                </button>
                 <div
                   style={styles.bluraButton}
-                  onClick={(e) => handelDelete(blog._id)}
+                  onClick={(e) => handelConfrom(blog._id)}
                 >
                   <Trash size={16} />
                 </div>
@@ -228,5 +264,18 @@ const styles = {
     fontSize: "15px",
     cursor: "pointer",
     marginTop: "auto",
+    border: "none",
+  },
+  blurButtonr: {
+    backgroundColor: "#c73440", // Apple Green
+    color: "#FFF",
+    textAlign: "center",
+    padding: "14px",
+    borderRadius: "16px",
+    fontWeight: "600",
+    fontSize: "15px",
+    cursor: "pointer",
+    marginTop: "auto",
+    border: "none",
   },
 };

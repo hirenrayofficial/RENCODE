@@ -69,10 +69,11 @@ body {
   /* margin-bottom: 54px; */
   height: 40px;
   color: black;
-  background: #bbfdcd;
+  background: #09c75c;
   cursor: pointer;
+  border-radius: 30px;
   &:hover{
-     background: #09c75c;
+     background: #09c75b9a;
   }
 }
 
