@@ -1,7 +1,6 @@
 import React, {
   createContext,
   useContext,
-  useState,
 } from "react";
 import { likeAPi } from "../component/api/ApiProvider";
 
