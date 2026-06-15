@@ -15,6 +15,9 @@ import Editordashboard from "./editor/Editordashboard";
 import Login from "./pages/authenTication/Login";
 import EProtuctedRoute from "./protectedRoute/EProtuctedRoute";
 import Post from "./editor/pages/Post";
+import { DrawerContext } from "./context/DrawerContext";
+import { AuthProvider } from "./context/AuthContext";
+import { LikeContext } from "./context/LikeContext";
 // import Adminlayout from "./admin/component/layout/Adminlayout";
 // import Published from "./admin/pages/Published";
 // import ProtectedAdmin from "./protectedRoute/ProtectedAdmin";
@@ -28,7 +31,16 @@ const Editor = () => <EditorLayout />;
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomeLayout />,
+    element: (
+      <AuthProvider>
+        <LikeContext>
+          <DrawerContext>
+            {" "}
+            <HomeLayout />
+          </DrawerContext>
+        </LikeContext>
+      </AuthProvider>
+    ),
     children: [
       { index: true, element: <Hero /> },
       { path: "blog/:slug", element: <BlogView /> },
@@ -45,7 +57,7 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        index: '/',
+        index: "/",
         element: <Editordashboard />,
       },
       {

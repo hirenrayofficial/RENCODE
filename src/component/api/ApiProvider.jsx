@@ -25,3 +25,14 @@ export const loginApi = async (email, pass) => {
   });
   return res;
 };
+export const signApi = async (name,email,pass,type)=>{
+  const apiRes = await axios.post(api + "/user/sign",{name,email,pass,type})
+  return apiRes;
+}
+
+export const likeAPi = async(blogid,id)=>{
+  const apiRes = await axios.post(api + "/user/blog/like",{
+    id,blogid
+  })
+  return apiRes;
+}

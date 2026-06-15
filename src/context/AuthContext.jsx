@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, } from 'react';
+import React, { createContext, useState, useContext } from "react";
 // import { toast } from 'sonner';
 const AuthContext = createContext();
 
@@ -10,10 +10,18 @@ export const AuthProvider = ({ children }) => {
   });
 
 
-  const isAdmin = user.role === 'admin';
+  const [login] = useState(() => {
+    const tempUser = localStorage.getItem("t-usdtls") || "";
+    return tempUser ? JSON.parse(tempUser) : false
+  });
+
+
+  const isUser = login.user_role === "user";
+  const isAdmin = user.role === "admin";
+
 
   return (
-    <AuthContext.Provider value={{isAdmin, }}>
+    <AuthContext.Provider value={{ isAdmin, isUser, login }}>
       {children}
     </AuthContext.Provider>
   );

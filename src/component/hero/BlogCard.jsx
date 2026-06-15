@@ -4,12 +4,15 @@ import { Heart, MessageCircle, SignalHigh } from "lucide-react";
 import { DateTime } from "luxon";
 import { FiShare2 } from "react-icons/fi";
 import ShareMenu from "./ShareMenu";
+import { useLike } from "../../context/LikeContext";
 
 export default function BlogCard({ blogList, loading }) {
   const skeleton = Array(6).fill(0); // Simpler way to create an array for mapping
 
+  const {handelLike}= useLike()
   const [activeShareId, setActiveShareId] = useState(null);
   const menuRef = useRef(null);
+
 
   useEffect(() => {
     const closeMenu = (e) => {
@@ -24,6 +27,8 @@ export default function BlogCard({ blogList, loading }) {
   const toggleShare = (id) => {
     setActiveShareId((prev) => (prev === id ? null : id));
   };
+
+
   return (
     <div className="list-main">
       <div className="list-content">
@@ -89,7 +94,7 @@ export default function BlogCard({ blogList, loading }) {
 
                   <div className="card-footer">
                     <div className="stats-group">
-                      <button className="stat-item like" aria-label="Like">
+                      <button className={`stat-item like`} aria-label="Like" onClick={(e)=>handelLike({blogid:item._id})}>
                         <Heart size={18} />
                         <span>{item.like || 0}</span>
                       </button>
