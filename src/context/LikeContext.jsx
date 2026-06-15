@@ -11,10 +11,11 @@ export const LikeContext = ({ children }) => {
 
     const lsDtls = JSON.parse(localStorage.getItem("t-usdtls"))
     const id = lsDtls?.uuid
-    const [likes,setLikes] = useState()
+    // const [likes,setLikes] = useState()
 
     const handelLike = async ({blogid})=>{
       const res = await likeAPi(blogid,id)
+      console.log(res)
       // alert(blogid,id)
 
     }
